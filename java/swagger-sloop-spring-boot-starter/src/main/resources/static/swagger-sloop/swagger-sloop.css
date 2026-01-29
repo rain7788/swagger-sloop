@@ -1126,25 +1126,48 @@ a:hover {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 13px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 12px;
     font-weight: 500;
+    letter-spacing: 0.02em;
 }
 
 .art-status-badge.success {
-    background: var(--art-success-bg);
-    color: var(--art-success);
+    background: #F6FFED;
+    color: #52C41A;
+    border: 1px solid #B7EB8F;
 }
 
 .art-status-badge.error {
-    background: var(--art-danger-bg);
-    color: var(--art-danger);
+    background: #FFF2F0;
+    color: #FF4D4F;
+    border: 1px solid #FFCCC7;
+}
+
+.dark .art-status-badge.success {
+    background: rgba(82, 196, 26, 0.1);
+    color: #52C41A;
+    border: 1px solid rgba(82, 196, 26, 0.3);
+}
+
+.dark .art-status-badge.error {
+    background: rgba(255, 77, 79, 0.1);
+    color: #FF4D4F;
+    border: 1px solid rgba(255, 77, 79, 0.3);
 }
 
 .art-response-time {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--art-text-secondary);
+    background: var(--art-gray-100);
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+}
+
+.dark .art-response-time {
+    background: var(--art-gray-200);
 }
 
 /* Code Block */
@@ -1200,18 +1223,52 @@ a:hover {
 }
 
 .art-code-content {
-    padding: 16px;
+    padding: 18px;
     overflow-x: auto;
+    background: var(--art-bg-card);
+    border: 1px solid var(--art-border-color);
+    border-radius: 6px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
 }
 
 .art-code-content pre {
     margin: 0;
     font-family: 'SF Mono', Monaco, Consolas, monospace;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.6;
     color: var(--art-text-primary);
     white-space: pre-wrap;
     word-break: break-word;
+    background: transparent;
+}
+
+/* JSON 语法高亮 - art-design-pro 风格 */
+.art-json-key {
+    color: #1890FF;
+    font-weight: 500;
+}
+
+.art-json-string {
+    color: #52C41A;
+}
+
+.art-json-number {
+    color: #722ED1;
+    font-weight: 500;
+}
+
+.art-json-boolean {
+    color: #FA8C16;
+    font-weight: 600;
+}
+
+.art-json-null {
+    color: #8C8C8C;
+    font-style: italic;
+}
+
+.art-json-punct {
+    color: var(--art-text-secondary);
 }
 
 /* Tabs */

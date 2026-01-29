@@ -1539,7 +1539,13 @@
             }
 
             const responseBody = activePanel.querySelector('#responseBody');
-            if (responseBody) responseBody.textContent = responseText;
+            if (responseBody) {
+                if (contentType.includes('application/json')) {
+                    responseBody.innerHTML = highlightJson(responseText);
+                } else {
+                    responseBody.textContent = responseText;
+                }
+            }
 
             // Response headers
             const headerLines = [];
@@ -1594,7 +1600,7 @@
 
         // Collect parameter values from inputs within the panel
         const paramInputs = panel ? panel.querySelectorAll('[data-param]') : document.querySelectorAll('[data-param]');
-        
+
         // First pass: replace path parameters
         paramInputs.forEach(input => {
             const name = input.dataset.param;
@@ -1605,7 +1611,7 @@
                 pathname = pathname.replace(`{${name}}`, encodeURIComponent(value));
             }
         });
-        
+
         // Create URL after path parameters are replaced
         let url = new URL(pathname, window.location.origin);
 
@@ -1758,6 +1764,17 @@
         if (responseCard) {
             responseCard.style.display = 'none';
         }
+    }
+
+    // JSON 语法高亮函数
+    function highlightJson(json) {
+        return json
+            .replace(/"([^"]+)":/g, '<span class="art-json-key">"$1"</span>:')
+            .replace(/: "([^"]*)"/g, ': <span class="art-json-string">"$1"</span>')
+            .replace(/: (-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)/g, ': <span class="art-json-number">$1</span>')
+            .replace(/: (true|false)/g, ': <span class="art-json-boolean">$1</span>')
+            .replace(/: (null)/g, ': <span class="art-json-null">$1</span>')
+            .replace(/([\[\]{},:;])/g, '<span class="art-json-punct">$1</span>');
     }
 
     function formatRequestBody() {

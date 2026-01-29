@@ -182,6 +182,14 @@
                 applyTheme('auto');
             }
         });
+
+        // Tabs bar horizontal scroll with mouse wheel
+        elements.tabsBar.addEventListener('wheel', (e) => {
+            if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                e.preventDefault();
+                elements.tabsBar.scrollLeft += e.deltaY;
+            }
+        }, { passive: false });
     }
 
     function handleGlobalKeydown(e) {
@@ -575,18 +583,7 @@
     // ============================================
     // Tab Management
     // ============================================
-    // Dynamic max tabs based on available width
-    const TAB_WIDTH = 110; // Fixed tab width in pixels (must match CSS)
-    const HOME_TAB_WIDTH = 70; // Home tab width
-    const TAB_GAP = 6; // Gap between tabs
-    const TABS_PADDING = 20; // Left and right padding of tabs bar
-
-    function calculateMaxTabs() {
-        const tabsBar = elements.tabsBar;
-        if (!tabsBar) return 10; // Default fallback
-        const availableWidth = tabsBar.parentElement.offsetWidth - HOME_TAB_WIDTH - TABS_PADDING;
-        return Math.max(1, Math.floor(availableWidth / (TAB_WIDTH + TAB_GAP)));
-    }
+    // No tab limit - use horizontal scroll instead
 
     function generateTabId(path, method) {
         return `tab_${method}_${path.replace(/[^a-zA-Z0-9]/g, '_')}`;
@@ -603,24 +600,11 @@
         if (existingTab) {
             renderTabs(); // Ensure tabs are rendered (important for group switching)
             activateTab(tabId);
+            scrollTabIntoView(tabId);
             return;
         }
 
-        // Dynamic max tabs based on available width
-        const maxTabs = calculateMaxTabs();
-        while (state.openTabs.length >= maxTabs) {
-            // Find the oldest non-active tab to close
-            const oldestTab = state.openTabs.find(t => t.id !== state.activeTabId);
-            if (oldestTab) {
-                // Remove without triggering full close logic
-                const idx = state.openTabs.findIndex(t => t.id === oldestTab.id);
-                if (idx !== -1) state.openTabs.splice(idx, 1);
-            } else {
-                break; // All tabs are active, don't close
-            }
-        }
-
-        // Create new tab
+        // No limit - just add the new tab
         const newTab = {
             id: tabId,
             path,
@@ -632,6 +616,7 @@
 
         renderTabs();
         activateTab(tabId);
+        scrollTabIntoView(tabId);
 
         // Update nav active state
         updateNavActiveState(path, method);
@@ -761,6 +746,16 @@
     function clearNavActiveState() {
         elements.apiNav.querySelectorAll('.art-nav-item').forEach(item => {
             item.classList.remove('active');
+        });
+    }
+
+    // Scroll tab into view when activated or opened
+    function scrollTabIntoView(tabId) {
+        requestAnimationFrame(() => {
+            const tabEl = elements.tabsBar.querySelector(`[data-tab-id="${tabId}"]`);
+            if (tabEl) {
+                tabEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+            }
         });
     }
 

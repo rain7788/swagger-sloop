@@ -271,5 +271,5 @@ SwaggerSloop/
 ---
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/seacode">SeaCode</a>
+  Made with ❤️ by <a href="https://github.com/rain7788">rain7788</a>
 </p>

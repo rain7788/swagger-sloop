@@ -6,7 +6,7 @@ Thank you for your interest in contributing to SwaggerSloop! 🎉
 
 ### Reporting Bugs
 
-1. Check if the bug has already been reported in [Issues](https://github.com/seacode/swagger-sloop/issues)
+1. Check if the bug has already been reported in [Issues](https://github.com/rain7788/swagger-sloop/issues)
 2. If not, create a new issue with:
    - Clear title and description
    - Steps to reproduce
@@ -15,7 +15,7 @@ Thank you for your interest in contributing to SwaggerSloop! 🎉
 
 ### Suggesting Features
 
-1. Check existing [Issues](https://github.com/seacode/swagger-sloop/issues) for similar suggestions
+1. Check existing [Issues](https://github.com/rain7788/swagger-sloop/issues) for similar suggestions
 2. Open a new issue with the `enhancement` label
 3. Describe the feature and its use case
 
@@ -81,4 +81,4 @@ Frontend files (CSS, JS, HTML) are in `shared/resources/`. After modifying:
 
 ## Questions?
 
-Feel free to open a [Discussion](https://github.com/seacode/swagger-sloop/discussions) or reach out!
+Feel free to open a [Discussion](https://github.com/rain7788/swagger-sloop/discussions) or reach out!

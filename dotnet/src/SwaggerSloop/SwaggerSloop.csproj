@@ -10,13 +10,13 @@
     <!-- NuGet Package Info -->
     <PackageId>SwaggerSloop</PackageId>
     <Version>1.0.0</Version>
-    <Authors>SeaCode</Authors>
-    <Company>SeaCode</Company>
+    <Authors>rain7788</Authors>
+    <Company>rain7788</Company>
     <Description>A beautiful Swagger UI skin inspired by Art-Design-Pro with knife4j-like features. Modern, elegant, and feature-rich API documentation interface for .NET applications.</Description>
     <PackageTags>swagger;openapi;swagger-ui;api-documentation;swagger-sloop;knife4j;aspnetcore</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/seacode/swagger-sloop</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/seacode/swagger-sloop</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/rain7788/swagger-sloop</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rain7788/swagger-sloop</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     

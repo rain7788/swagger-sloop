@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 /**
  * Controller for serving SwaggerSloop index.html with dynamic configuration
  *
- * @author SeaCode
+ * @author rain7788
  */
 @Controller
 public class SwaggerSloopIndexController {

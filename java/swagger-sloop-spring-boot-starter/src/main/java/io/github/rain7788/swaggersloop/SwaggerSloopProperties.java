@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * SwaggerSloop configuration properties
  *
- * @author SeaCode
+ * @author rain7788
  */
 @ConfigurationProperties(prefix = "swagger-sloop")
 public class SwaggerSloopProperties {

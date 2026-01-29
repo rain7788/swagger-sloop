@@ -2,7 +2,7 @@
  * ArtSwagger - Art-Design-Pro Style Swagger UI
  * A beautiful, modern Swagger UI skin with knife4j-like features
  * 
- * @author SeaCode
+ * @author rain7788
  * @license MIT
  * @version 1.0.0
  */

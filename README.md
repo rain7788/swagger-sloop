@@ -20,7 +20,7 @@
 <p align="center">
   <a href="https://www.nuget.org/packages/SwaggerSloop"><img src="https://img.shields.io/nuget/v/SwaggerSloop?logo=nuget&label=NuGet" alt="NuGet"></a>
   <a href="https://central.sonatype.com/artifact/com.seacode/swagger-sloop-spring-boot-starter"><img src="https://img.shields.io/maven-central/v/com.seacode/swagger-sloop-spring-boot-starter?logo=apachemaven&label=Maven" alt="Maven Central"></a>
-  <img src="https://img.shields.io/badge/.NET-6.0%20%7C%207.0%20%7C%208.0%20%7C%209.0-512BD4?logo=dotnet" alt=".NET">
+  <img src="https://img.shields.io/badge/.NET-6.0%20%7C%207.0%20%7C%208.0%20%7C%209.0%20%7C%2010.0-512BD4?logo=dotnet" alt=".NET">
   <img src="https://img.shields.io/badge/Java-8%2B-orange?logo=openjdk" alt="Java">
   <img src="https://img.shields.io/badge/License-MIT-blue" alt="License">
 </p>
@@ -46,7 +46,7 @@
 | 📑 **Multi-API Groups**  | Switch between multiple OpenAPI specs                  |
 | 📱 **Responsive**        | Works on desktop, tablet, mobile                       |
 | ⚡ **Zero Dependencies** | Pure vanilla JS/CSS                                    |
-| 🌐 **Cross-Platform**    | .NET 6+ and Java 8+ / Spring Boot 2.7+                 |
+| 🌐 **Cross-Platform**    | .NET 6-10 and Java 8+ / Spring Boot 2.7+               |
 
 ### 📦 Installation / 安装
 
@@ -110,6 +110,10 @@ app.UseSwaggerSloop(options =>
     options.DefaultTheme = "auto"; // light, dark, auto
     options.EnableSearch = true;
     options.EnableCodeCopy = true;
+
+    // Multi-group support
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
+    options.SwaggerEndpoint("/swagger/v2/swagger.json", "API V2");
 });
 ```
 
@@ -156,7 +160,7 @@ swagger-sloop:
 | 📑 **多文档支持** | 支持多个 OpenAPI 文档切换                    |
 | 📱 **响应式**     | 适配桌面、平板、手机                         |
 | ⚡ **零依赖**     | 纯原生 JS/CSS                                |
-| 🌐 **跨平台**     | 支持 .NET 6+ 和 Java 8+ / Spring Boot 2.7+   |
+| 🌐 **跨平台**     | 支持 .NET 6-10 和 Java 8+ / Spring Boot 2.7+ |
 
 ### 📦 安装
 
@@ -203,14 +207,15 @@ swagger-sloop.document-title=我的 API
 
 ### ⚙️ 配置项
 
-| 配置项   | .NET             | Java               | 默认值              | 说明            |
-| -------- | ---------------- | ------------------ | ------------------- | --------------- |
-| 文档标题 | `DocumentTitle`  | `document-title`   | "API Documentation" | 页面标题        |
-| 路由前缀 | `RoutePrefix`    | `route-prefix`     | "swagger"           | URL 路径        |
-| 主题色   | `PrimaryColor`   | `primary-color`    | "#5D87FF"           | 主题颜色        |
-| 默认主题 | `DefaultTheme`   | `default-theme`    | "auto"              | light/dark/auto |
-| 搜索功能 | `EnableSearch`   | `enable-search`    | true                | 启用搜索        |
-| 代码复制 | `EnableCodeCopy` | `enable-code-copy` | true                | 启用复制        |
+| 配置项   | .NET                | Java                | 默认值              | 说明            |
+| -------- | ------------------- | ------------------- | ------------------- | --------------- |
+| 文档标题 | `DocumentTitle`     | `document-title`    | "API Documentation" | 页面标题        |
+| 路由前缀 | `RoutePrefix`       | `route-prefix`      | "swagger"           | URL 路径        |
+| 主题色   | `PrimaryColor`      | `primary-color`     | "#5D87FF"           | 主题颜色        |
+| 默认主题 | `DefaultTheme`      | `default-theme`     | "auto"              | light/dark/auto |
+| 搜索功能 | `EnableSearch`      | `enable-search`     | true                | 启用搜索        |
+| 代码复制 | `EnableCodeCopy`    | `enable-code-copy`  | true                | 启用复制        |
+| 多分组   | `SwaggerEndpoint()` | `swagger-endpoints` | -                   | 配置多个API分组 |
 
 ### ⌨️ 快捷键
 
@@ -242,8 +247,7 @@ SwaggerSloop/
 
 ## 🙏 Credits / 致谢
 
-- UI inspired by [Art-Design-Pro](https://github.com/art-design-pro)
-- Features inspired by [knife4j](https://github.com/xiaoymin/knife4j)
+- UI inspired by [Art-Design-Pro](https://github.com/Daymychen/art-design-pro)
 
 ---
 

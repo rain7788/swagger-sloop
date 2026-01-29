@@ -187,7 +187,7 @@ a:hover {
     align-items: center;
     justify-content: space-between;
     height: 50px;
-    padding: 0 16px;
+    padding: 0 20px;
     background: var(--art-bg-page);
     border-bottom: none;
     flex-shrink: 0;
@@ -1292,7 +1292,7 @@ a:hover {
     background: var(--art-bg-card);
     border: 1px solid var(--art-border-color);
     border-radius: 6px;
-    color: var(--art-text-secondary);
+    color: var(--art-text-primary);
     font-size: 12px;
     cursor: pointer;
     transition: var(--art-transition);
@@ -1301,14 +1301,13 @@ a:hover {
 }
 
 .art-tab-item:hover {
-    color: var(--art-text-primary);
-    border-color: var(--art-gray-400);
+    color: var(--art-primary);
 }
 
 .art-tab-item.active {
     background: var(--art-bg-card);
     border-color: var(--art-border-color);
-    color: var(--art-text-primary);
+    color: var(--art-primary);
     font-weight: 500;
 }
 

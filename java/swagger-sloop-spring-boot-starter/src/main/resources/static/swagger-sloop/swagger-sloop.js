@@ -462,10 +462,21 @@
             </div>
         `).join('');
 
-        // Add click handlers for tags
+        // Add click handlers for tags (accordion style - only one expanded at a time)
         elements.apiNav.querySelectorAll('.art-nav-tag-header').forEach(header => {
             header.addEventListener('click', () => {
-                header.parentElement.classList.toggle('collapsed');
+                const parentTag = header.parentElement;
+                const isCollapsed = parentTag.classList.contains('collapsed');
+
+                // If clicking to expand, collapse all others first
+                if (isCollapsed) {
+                    elements.apiNav.querySelectorAll('.art-nav-tag').forEach(tag => {
+                        tag.classList.add('collapsed');
+                    });
+                }
+
+                // Toggle the clicked one
+                parentTag.classList.toggle('collapsed');
             });
         });
 
@@ -564,7 +575,18 @@
     // ============================================
     // Tab Management
     // ============================================
-    const MAX_TABS = 10; // Maximum number of open tabs
+    // Dynamic max tabs based on available width
+    const TAB_WIDTH = 100; // Average tab width in pixels
+    const HOME_TAB_WIDTH = 70; // Home tab width
+    const TAB_GAP = 6; // Gap between tabs
+    const TABS_PADDING = 20; // Left and right padding of tabs bar
+
+    function calculateMaxTabs() {
+        const tabsBar = elements.tabsBar;
+        if (!tabsBar) return 10; // Default fallback
+        const availableWidth = tabsBar.parentElement.offsetWidth - HOME_TAB_WIDTH - TABS_PADDING;
+        return Math.max(1, Math.floor(availableWidth / (TAB_WIDTH + TAB_GAP)));
+    }
 
     function generateTabId(path, method) {
         return `tab_${method}_${path.replace(/[^a-zA-Z0-9]/g, '_')}`;
@@ -584,14 +606,17 @@
             return;
         }
 
-        // If too many tabs, close the oldest one (not the active one)
-        while (state.openTabs.length >= MAX_TABS) {
+        // Dynamic max tabs based on available width
+        const maxTabs = calculateMaxTabs();
+        while (state.openTabs.length >= maxTabs) {
+            // Find the oldest non-active tab to close
             const oldestTab = state.openTabs.find(t => t.id !== state.activeTabId);
             if (oldestTab) {
-                closeTab(oldestTab.id);
+                // Remove without triggering full close logic
+                const idx = state.openTabs.findIndex(t => t.id === oldestTab.id);
+                if (idx !== -1) state.openTabs.splice(idx, 1);
             } else {
-                // All tabs are active? Close the first one
-                closeTab(state.openTabs[0].id);
+                break; // All tabs are active, don't close
             }
         }
 

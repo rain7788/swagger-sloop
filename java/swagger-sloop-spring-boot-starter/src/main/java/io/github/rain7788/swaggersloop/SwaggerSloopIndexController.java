@@ -1,4 +1,4 @@
-package com.seacode.swaggersloop;
+package io.github.rain7788.swaggersloop;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -22,7 +22,7 @@ Modern, elegant, and feature-rich API documentation interface for Java Spring Bo
 
 ```xml
 <dependency>
-    <groupId>com.seacode</groupId>
+    <groupId>io.github.rain7788</groupId>
     <artifactId>swagger-sloop-spring-boot-starter</artifactId>
     <version>1.0.0</version>
 </dependency>
@@ -31,7 +31,7 @@ Modern, elegant, and feature-rich API documentation interface for Java Spring Bo
 ### Gradle
 
 ```groovy
-implementation 'com.seacode:swagger-sloop-spring-boot-starter:1.0.0'
+implementation 'io.github.rain7788:swagger-sloop-spring-boot-starter:1.0.0'
 ```
 
 ## 🚀 Quick Start

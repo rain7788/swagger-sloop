@@ -19,7 +19,7 @@
 
 <p align="center">
   <a href="https://www.nuget.org/packages/SwaggerSloop"><img src="https://img.shields.io/nuget/v/SwaggerSloop?logo=nuget&label=NuGet" alt="NuGet"></a>
-  <a href="https://central.sonatype.com/artifact/com.seacode/swagger-sloop-spring-boot-starter"><img src="https://img.shields.io/maven-central/v/com.seacode/swagger-sloop-spring-boot-starter?logo=apachemaven&label=Maven" alt="Maven Central"></a>
+  <a href="https://central.sonatype.com/artifact/io.github.rain7788/swagger-sloop-spring-boot-starter"><img src="https://img.shields.io/maven-central/v/io.github.rain7788/swagger-sloop-spring-boot-starter?logo=apachemaven&label=Maven" alt="Maven Central"></a>
   <img src="https://img.shields.io/badge/.NET-6.0%20%7C%207.0%20%7C%208.0%20%7C%209.0%20%7C%2010.0-512BD4?logo=dotnet" alt=".NET">
   <img src="https://img.shields.io/badge/Java-8%2B-orange?logo=openjdk" alt="Java">
   <img src="https://img.shields.io/badge/License-MIT-blue" alt="License">
@@ -79,7 +79,7 @@ dotnet add package SwaggerSloop
 
 ```xml
 <dependency>
-    <groupId>com.seacode</groupId>
+    <groupId>io.github.rain7788</groupId>
     <artifactId>swagger-sloop-spring-boot-starter</artifactId>
     <version>1.0.0</version>
 </dependency>
@@ -88,7 +88,7 @@ dotnet add package SwaggerSloop
 #### Java (Gradle)
 
 ```groovy
-implementation 'com.seacode:swagger-sloop-spring-boot-starter:1.0.0'
+implementation 'io.github.rain7788:swagger-sloop-spring-boot-starter:1.0.0'
 ```
 
 ### 🚀 Quick Start / 快速开始
@@ -193,7 +193,7 @@ dotnet add package SwaggerSloop
 
 ```xml
 <dependency>
-    <groupId>com.seacode</groupId>
+    <groupId>io.github.rain7788</groupId>
     <artifactId>swagger-sloop-spring-boot-starter</artifactId>
     <version>1.0.0</version>
 </dependency>

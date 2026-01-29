@@ -38,7 +38,7 @@
 
         <!-- SwaggerSloop -->
         <dependency>
-            <groupId>com.seacode</groupId>
+            <groupId>io.github.rain7788</groupId>
             <artifactId>swagger-sloop-spring-boot-starter</artifactId>
             <version>1.0.0</version>
         </dependency>

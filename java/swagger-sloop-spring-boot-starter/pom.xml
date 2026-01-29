@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.seacode</groupId>
+    <groupId>io.github.rain7788</groupId>
     <artifactId>swagger-sloop-spring-boot-starter</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>SwaggerSloop Spring Boot Starter</name>
     <description>A beautiful Swagger UI skin inspired by Art-Design-Pro with knife4j-like features for Spring Boot applications</description>
-    <url>https://github.com/seacode/swagger-sloop</url>
+    <url>https://github.com/rain7788/swagger-sloop</url>
 
     <licenses>
         <license>
@@ -28,9 +28,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/seacode/swagger-sloop.git</connection>
-        <developerConnection>scm:git:ssh://github.com/seacode/swagger-sloop.git</developerConnection>
-        <url>https://github.com/seacode/swagger-sloop</url>
+        <connection>scm:git:git://github.com/rain7788/swagger-sloop.git</connection>
+        <developerConnection>scm:git:ssh://github.com/rain7788/swagger-sloop.git</developerConnection>
+        <url>https://github.com/rain7788/swagger-sloop</url>
     </scm>
 
     <properties>

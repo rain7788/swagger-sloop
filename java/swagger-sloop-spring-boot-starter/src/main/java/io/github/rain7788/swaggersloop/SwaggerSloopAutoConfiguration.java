@@ -1,4 +1,4 @@
-package com.seacode.swaggersloop;
+package io.github.rain7788.swaggersloop;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;

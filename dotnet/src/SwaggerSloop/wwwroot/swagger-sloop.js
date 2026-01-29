@@ -2020,7 +2020,7 @@
                     <div class="${checkboxClass}" onclick="window.ArtSwagger.toggleGlobalParamsEnabled(event)">
                         <svg class="art-icon" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></svg>
                     </div>
-                    <span class="art-global-params-title">全局参数（可临时修改）</span>
+                    <span class="art-global-params-title">全局参数</span>
                     <span class="art-global-params-badge">${globalParams.length}</span>
                 </div>
                 <div class="art-global-params-table">

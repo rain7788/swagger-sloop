@@ -6,7 +6,7 @@
 
     <groupId>io.github.rain7788</groupId>
     <artifactId>swagger-sloop-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>SwaggerSloop Spring Boot Starter</name>

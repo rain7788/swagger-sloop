@@ -64,6 +64,14 @@ public class SwaggerSloopProperties {
     private List<String> additionalScripts = new ArrayList<>();
 
     /**
+     * Inline CSS and JS resources into HTML.
+     * When enabled, only /swagger/* path pattern is needed for interceptor
+     * exclusion.
+     * When disabled (default), /swagger/** pattern is required.
+     */
+    private boolean inlineResources = false;
+
+    /**
      * OAuth2 client ID (for OAuth authentication)
      */
     private String oauthClientId;
@@ -153,6 +161,14 @@ public class SwaggerSloopProperties {
 
     public void setAdditionalScripts(List<String> additionalScripts) {
         this.additionalScripts = additionalScripts;
+    }
+
+    public boolean isInlineResources() {
+        return inlineResources;
+    }
+
+    public void setInlineResources(boolean inlineResources) {
+        this.inlineResources = inlineResources;
     }
 
     public String getOauthClientId() {

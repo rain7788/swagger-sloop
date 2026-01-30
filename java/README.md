@@ -82,6 +82,9 @@ swagger-sloop.default-theme=auto
 swagger-sloop.enable-search=true
 swagger-sloop.enable-code-copy=true
 
+# Inline resources mode (see below for details)
+swagger-sloop.inline-resources=false
+
 # Multiple API endpoints
 swagger-sloop.swagger-endpoints[0].url=/v3/api-docs
 swagger-sloop.swagger-endpoints[0].name=API V1
@@ -98,6 +101,7 @@ swagger-sloop:
   route-prefix: swagger
   primary-color: "#5D87FF"
   default-theme: auto
+  inline-resources: false
   enable-search: true
   enable-code-copy: true
   swagger-endpoints:
@@ -123,6 +127,45 @@ swagger-sloop.primary-color=#B48DF3  # Purple
 swagger-sloop.primary-color=#60C041  # Green
 swagger-sloop.primary-color=#F9901F  # Orange
 ```
+
+## 🔒 Security Interceptor Configuration
+
+When using authentication interceptors (like Sa-Token, Spring Security, etc.), you need to exclude SwaggerSloop paths.
+
+### Default Mode (inline-resources=false)
+
+Requires `/swagger/**` pattern to match all static resources:
+
+```java
+registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
+    .addPathPatterns("/**")
+    .excludePathPatterns("/swagger/**")     // Must use ** to match all sub-paths
+    .excludePathPatterns("/v3/api-docs")
+    .excludePathPatterns("/v3/api-docs/**");
+```
+
+### Inline Resources Mode (inline-resources=true)
+
+When enabled, CSS and JS are embedded into the HTML page, so you only need `/swagger/*`:
+
+```properties
+swagger-sloop.inline-resources=true
+```
+
+```java
+registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
+    .addPathPatterns("/**")
+    .excludePathPatterns("/swagger/*")      // Only need single * with inline mode
+    .excludePathPatterns("/v3/api-docs")
+    .excludePathPatterns("/v3/api-docs/**");
+```
+
+| Mode    | Config                   | Interceptor Pattern | HTTP Requests | File Size           |
+| ------- | ------------------------ | ------------------- | ------------- | ------------------- |
+| Default | `inline-resources=false` | `/swagger/**`       | 3 requests    | Smaller per request |
+| Inline  | `inline-resources=true`  | `/swagger/*`        | 1 request     | ~180KB (gzip ~40KB) |
+
+> **Tip**: Use inline mode if you encounter 401 errors with `/swagger/*` configuration or want simpler interceptor rules.
 
 ## ⌨️ Keyboard Shortcuts
 

@@ -2,6 +2,8 @@ package io.github.rain7788.swaggersloop;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -24,8 +26,14 @@ import java.util.stream.Collectors;
 @Controller
 public class SwaggerSloopIndexController {
 
+    private static final Logger log = LoggerFactory.getLogger(SwaggerSloopIndexController.class);
     private static final String RESOURCE_PATH = "static/swagger-sloop/";
     private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    // Cached inline resources (loaded once on first request when inline mode is
+    // enabled)
+    private volatile String cachedCss = null;
+    private volatile String cachedJs = null;
 
     private final SwaggerSloopProperties properties;
 
@@ -77,6 +85,11 @@ public class SwaggerSloopIndexController {
                 .replace("%(Version)", version)
                 .replace("%(Urls)", urlsJson);
 
+        // Inline resources if enabled (allows /swagger/* instead of /swagger/**)
+        if (properties.isInlineResources()) {
+            html = inlineResources(html);
+        }
+
         // Inject additional stylesheets
         if (properties.getAdditionalStylesheets() != null && !properties.getAdditionalStylesheets().isEmpty()) {
             StringBuilder stylesheetTags = new StringBuilder();
@@ -113,5 +126,52 @@ public class SwaggerSloopIndexController {
                 .replace(">", "&gt;")
                 .replace("\"", "&quot;")
                 .replace("'", "&#39;");
+    }
+
+    /**
+     * Inline CSS and JS resources into the HTML.
+     * This allows users to use /swagger/* instead of /swagger/** in their
+     * interceptor exclusions.
+     */
+    private String inlineResources(String html) {
+        try {
+            // Load and cache CSS
+            if (cachedCss == null) {
+                Resource cssResource = new ClassPathResource(RESOURCE_PATH + "swagger-sloop.css");
+                if (cssResource.exists()) {
+                    cachedCss = StreamUtils.copyToString(cssResource.getInputStream(), StandardCharsets.UTF_8);
+                    log.debug("SwaggerSloop: CSS resource loaded and cached ({} bytes)", cachedCss.length());
+                }
+            }
+
+            // Load and cache JS
+            if (cachedJs == null) {
+                Resource jsResource = new ClassPathResource(RESOURCE_PATH + "swagger-sloop.js");
+                if (jsResource.exists()) {
+                    cachedJs = StreamUtils.copyToString(jsResource.getInputStream(), StandardCharsets.UTF_8);
+                    log.debug("SwaggerSloop: JS resource loaded and cached ({} bytes)", cachedJs.length());
+                }
+            }
+
+            // Replace external CSS link with inline style
+            if (cachedCss != null) {
+                html = html.replaceFirst(
+                        "<link rel=\"stylesheet\" href=\"\\./swagger-sloop\\.css[^\"]*\">",
+                        "<style>\n" + cachedCss + "\n</style>");
+            }
+
+            // Replace external JS script with inline script
+            if (cachedJs != null) {
+                html = html.replaceFirst(
+                        "<script src=\"\\./swagger-sloop\\.js[^\"]*\"></script>",
+                        "<script>\n" + cachedJs + "\n</script>");
+            }
+
+            log.debug("SwaggerSloop: Resources inlined successfully");
+        } catch (IOException e) {
+            log.warn("SwaggerSloop: Failed to inline resources, falling back to external files", e);
+        }
+
+        return html;
     }
 }

@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 全局异常处理器
  * 
@@ -28,14 +25,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NotLoginException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public Map<String, Object> handleNotLoginException(NotLoginException e) {
+    public ApiError handleNotLoginException(NotLoginException e) {
         log.debug("未登录访问: {}", e.getMessage());
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("code", 401);
-        result.put("message", "未登录，请先登录");
-        result.put("detail", e.getMessage());
-        return result;
+        return new ApiError(401, "未登录，请先登录", e.getMessage());
     }
 
     /**
@@ -43,14 +35,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NotPermissionException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public Map<String, Object> handleNotPermissionException(NotPermissionException e) {
+    public ApiError handleNotPermissionException(NotPermissionException e) {
         log.debug("无权限访问: {}", e.getMessage());
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("code", 403);
-        result.put("message", "无权限访问");
-        result.put("detail", e.getMessage());
-        return result;
+        return new ApiError(403, "无权限访问", e.getMessage());
     }
 
     /**
@@ -58,14 +45,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NotRoleException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public Map<String, Object> handleNotRoleException(NotRoleException e) {
+    public ApiError handleNotRoleException(NotRoleException e) {
         log.debug("无角色访问: {}", e.getMessage());
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("code", 403);
-        result.put("message", "无角色权限");
-        result.put("detail", e.getMessage());
-        return result;
+        return new ApiError(403, "无角色权限", e.getMessage());
     }
 
     /**
@@ -73,13 +55,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Map<String, Object> handleException(Exception e) {
+    public ApiError handleException(Exception e) {
         log.error("服务器内部错误", e);
-
-        Map<String, Object> result = new HashMap<>();
-        result.put("code", 500);
-        result.put("message", "服务器内部错误");
-        result.put("detail", e.getMessage());
-        return result;
+        return new ApiError(500, "服务器内部错误", e.getMessage());
     }
 }

@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Controller for serving SwaggerSloop index.html with dynamic configuration
@@ -155,16 +157,23 @@ public class SwaggerSloopIndexController {
 
             // Replace external CSS link with inline style
             if (cachedCss != null) {
-                html = html.replaceFirst(
-                        "<link rel=\"stylesheet\" href=\"\\./swagger-sloop\\.css[^\"]*\">",
-                        "<style>\n" + cachedCss + "\n</style>");
+                Pattern cssPattern = Pattern
+                        .compile("<link rel=\\\"stylesheet\\\" href=\\\"\\./swagger-sloop\\.css[^\\\"]*\\\">");
+                Matcher cssMatcher = cssPattern.matcher(html);
+                if (cssMatcher.find()) {
+                    String cssReplacement = "<style>\n" + cachedCss + "\n</style>";
+                    html = cssMatcher.replaceFirst(Matcher.quoteReplacement(cssReplacement));
+                }
             }
 
             // Replace external JS script with inline script
             if (cachedJs != null) {
-                html = html.replaceFirst(
-                        "<script src=\"\\./swagger-sloop\\.js[^\"]*\"></script>",
-                        "<script>\n" + cachedJs + "\n</script>");
+                Pattern jsPattern = Pattern.compile("<script src=\\\"\\./swagger-sloop\\.js[^\\\"]*\\\"></script>");
+                Matcher jsMatcher = jsPattern.matcher(html);
+                if (jsMatcher.find()) {
+                    String jsReplacement = "<script>\n" + cachedJs + "\n</script>";
+                    html = jsMatcher.replaceFirst(Matcher.quoteReplacement(jsReplacement));
+                }
             }
 
             log.debug("SwaggerSloop: Resources inlined successfully");

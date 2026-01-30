@@ -874,16 +874,28 @@
                 </div>
             </div>
 
-            <!-- Main Tabs: Document vs Debug -->
-            <div class="art-main-tabs" id="mainTabs">
-                <button class="art-main-tab active" data-tab="document">
-                    <svg class="art-icon" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" fill="currentColor"/></svg>
-                    文档
-                </button>
-                <button class="art-main-tab" data-tab="debug">
-                    <svg class="art-icon" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5c-.49 0-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20V8zm-6 8h-4v-2h4v2zm0-4h-4v-2h4v2z" fill="currentColor"/></svg>
-                    调试
-                </button>
+            <!-- Main Tabs Toolbar: Tabs on left, Actions on right -->
+            <div class="art-tabs-toolbar" id="tabsToolbar">
+                <div class="art-main-tabs" id="mainTabs">
+                    <button class="art-main-tab active" data-tab="document">
+                        <svg class="art-icon" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" fill="currentColor"/></svg>
+                        文档
+                    </button>
+                    <button class="art-main-tab" data-tab="debug">
+                        <svg class="art-icon" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5c-.49 0-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20V8zm-6 8h-4v-2h4v2zm0-4h-4v-2h4v2z" fill="currentColor"/></svg>
+                        调试
+                    </button>
+                </div>
+                <div class="art-toolbar-actions" id="toolbarActions">
+                    <button class="art-btn art-btn-primary art-btn-sm" onclick="SwaggerSloop.executeRequest()">
+                        <svg class="art-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5z" fill="currentColor"/></svg>
+                        发送请求
+                    </button>
+                    <button class="art-btn art-btn-ghost art-btn-sm" onclick="SwaggerSloop.clearInputs()">
+                        <svg class="art-icon" viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="currentColor"/></svg>
+                        重置
+                    </button>
+                </div>
             </div>
 
             <!-- Document Tab Content -->
@@ -1023,18 +1035,6 @@
 
             <!-- Debug Tab Content -->
             <div class="art-main-tab-content" id="tabDebug">
-                <!-- Execute Actions Bar (Top) -->
-                <div class="art-action-bar art-action-bar-top">
-                    <button class="art-btn art-btn-primary art-btn-execute" onclick="SwaggerSloop.executeRequest()">
-                        <svg class="art-icon" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><path d="M8 5v14l11-7L8 5z" fill="currentColor"/></svg>
-                        发送请求
-                    </button>
-                    <button class="art-btn art-btn-secondary" onclick="SwaggerSloop.clearInputs()">
-                        <svg class="art-icon" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="currentColor"/></svg>
-                        重置
-                    </button>
-                </div>
-
                 <!-- Global Params (if any) -->
                 ${renderGlobalParamsForDebug()}
 
@@ -1142,6 +1142,8 @@
 
     function initMainTabEvents(container) {
         const tabs = container.querySelectorAll('.art-main-tabs .art-main-tab');
+        const toolbarActions = container.querySelector('#toolbarActions');
+
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const tabName = tab.dataset.tab;
@@ -1152,6 +1154,11 @@
                 // Update tab content
                 container.querySelector('#tabDocument')?.classList.toggle('active', tabName === 'document');
                 container.querySelector('#tabDebug')?.classList.toggle('active', tabName === 'debug');
+
+                // Show/hide toolbar actions based on tab
+                if (toolbarActions) {
+                    toolbarActions.classList.toggle('visible', tabName === 'debug');
+                }
             });
         });
 

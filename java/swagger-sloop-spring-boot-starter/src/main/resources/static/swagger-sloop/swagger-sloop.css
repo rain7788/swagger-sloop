@@ -1776,6 +1776,28 @@ a:hover {
     height: 14px;
 }
 
+/* Execute Button Loading State */
+.art-execute-spinner {
+    display: none;
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+    border-width: 2px;
+}
+
+.art-btn.art-loading .art-execute-icon {
+    display: none;
+}
+
+.art-btn.art-loading .art-execute-spinner {
+    display: inline-block;
+}
+
+.art-btn.art-loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
 /* Card Badge */
 .art-card-badge {
     display: inline-flex;

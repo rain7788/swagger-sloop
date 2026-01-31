@@ -887,8 +887,9 @@
                     </button>
                 </div>
                 <div class="art-toolbar-actions" id="toolbarActions">
-                    <button class="art-btn art-btn-primary art-btn-sm" onclick="SwaggerSloop.executeRequest()">
-                        <svg class="art-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5z" fill="currentColor"/></svg>
+                    <button class="art-btn art-btn-primary art-btn-sm" id="executeBtn" onclick="SwaggerSloop.executeRequest()">
+                        <svg class="art-icon art-execute-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5z" fill="currentColor"/></svg>
+                        <span class="art-spinner art-execute-spinner"></span>
                         发送请求
                     </button>
                     <button class="art-btn art-btn-ghost art-btn-sm" onclick="SwaggerSloop.clearInputs()">
@@ -1143,7 +1144,7 @@
     function initMainTabEvents(container) {
         const tabs = container.querySelectorAll('.art-main-tabs .art-main-tab');
         const toolbarActions = container.querySelector('#toolbarActions');
-        
+
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const tabName = tab.dataset.tab;
@@ -1154,7 +1155,7 @@
                 // Update tab content
                 container.querySelector('#tabDocument')?.classList.toggle('active', tabName === 'document');
                 container.querySelector('#tabDebug')?.classList.toggle('active', tabName === 'debug');
-                
+
                 // Show/hide toolbar actions based on tab
                 if (toolbarActions) {
                     toolbarActions.classList.toggle('visible', tabName === 'debug');
@@ -1531,6 +1532,16 @@
         const activePanel = document.querySelector('.art-tab-panel.active');
         if (!activePanel) return;
 
+        // Get execute button and prevent multiple clicks
+        const executeBtn = document.getElementById('executeBtn');
+        if (executeBtn && executeBtn.classList.contains('art-loading')) return;
+
+        // Set loading state
+        if (executeBtn) {
+            executeBtn.classList.add('art-loading');
+            executeBtn.disabled = true;
+        }
+
         const { url, headers, body, isFormData } = buildRequest(op, activePanel);
         const startTime = performance.now();
 
@@ -1684,6 +1695,12 @@
             if (curlCommand) curlCommand.textContent = generateCurl(op, url, headers, body, isFormData);
 
             showToast(`请求失败: ${error.message}`, 'error');
+        } finally {
+            // Reset loading state
+            if (executeBtn) {
+                executeBtn.classList.remove('art-loading');
+                executeBtn.disabled = false;
+            }
         }
     }
 

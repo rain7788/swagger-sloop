@@ -2167,6 +2167,15 @@ a:hover {
     overflow: hidden;
 }
 
+.art-params-list .art-params-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.art-params-list .art-params-table td {
+    overflow: hidden;
+}
+
 .art-params-empty {
     padding: 40px 20px;
     text-align: center;
@@ -2175,11 +2184,14 @@ a:hover {
 }
 
 .art-param-value {
+    display: inline-block;
     color: var(--art-text-regular);
-    max-width: 200px;
+    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-family: 'SF Mono', Monaco, Consolas, monospace;
+    font-size: 13px;
 }
 
 .art-param-type.header {
@@ -2381,6 +2393,7 @@ a:hover {
 }
 
 .art-global-params-table .art-param-name {
+    display: inline-block;
     font-family: 'SF Mono', Monaco, Consolas, monospace;
     font-size: 13px;
     font-weight: 500;
@@ -2388,6 +2401,10 @@ a:hover {
     background: var(--art-bg-elevated);
     padding: 3px 8px;
     border-radius: 4px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .art-global-params-table .art-param-type {

@@ -2016,11 +2016,11 @@
         }
 
         listEl.innerHTML = `
-            <table class="art-params-table">
+            <table class="art-params-table" style="table-layout: fixed;">
                 <thead>
                     <tr>
-                        <th style="width: 30%;">参数名</th>
-                        <th style="width: 35%;">参数值</th>
+                        <th style="width: 25%;">参数名</th>
+                        <th style="width: 40%;">参数值</th>
                         <th style="width: 15%;">类型</th>
                         <th style="width: 20%;">操作</th>
                     </tr>

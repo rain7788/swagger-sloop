@@ -47,12 +47,6 @@ app.UseSwaggerSloop(options =>
 // 用户管理 API
 // ============================================
 
-/// <summary>
-/// 获取所有用户列表
-/// </summary>
-/// <remarks>
-/// 返回系统中所有注册用户的基本信息，支持分页查询。
-/// </remarks>
 app.MapGet("/api/users", (int? page, int? pageSize) =>
 {
     var users = new[]
@@ -68,9 +62,6 @@ app.MapGet("/api/users", (int? page, int? pageSize) =>
 .WithDescription("获取系统中所有用户的列表，支持分页")
 .WithTags("用户管理");
 
-/// <summary>
-/// 根据ID获取用户详情
-/// </summary>
 app.MapGet("/api/users/{id}", (int id) =>
 {
     var user = new User(id, "张三", "zhangsan@example.com", "13800138001", DateTime.Now.AddDays(-30), true);
@@ -81,9 +72,6 @@ app.MapGet("/api/users/{id}", (int id) =>
 .WithDescription("根据用户ID获取用户的详细信息")
 .WithTags("用户管理");
 
-/// <summary>
-/// 创建新用户
-/// </summary>
 app.MapPost("/api/users", (CreateUserRequest request) =>
 {
     var user = new User(1, request.Name, request.Email, request.Phone, DateTime.Now, true);
@@ -94,9 +82,6 @@ app.MapPost("/api/users", (CreateUserRequest request) =>
 .WithDescription("创建一个新的用户账户")
 .WithTags("用户管理");
 
-/// <summary>
-/// 更新用户信息
-/// </summary>
 app.MapPut("/api/users/{id}", (int id, UpdateUserRequest request) =>
 {
     var user = new User(id, request.Name, request.Email, request.Phone, DateTime.Now.AddDays(-30), request.IsActive);
@@ -107,9 +92,6 @@ app.MapPut("/api/users/{id}", (int id, UpdateUserRequest request) =>
 .WithDescription("更新指定用户的信息")
 .WithTags("用户管理");
 
-/// <summary>
-/// 删除用户
-/// </summary>
 app.MapDelete("/api/users/{id}", (int id) =>
 {
     return Results.Ok(new ApiResponse<object>(true, "删除成功", null));

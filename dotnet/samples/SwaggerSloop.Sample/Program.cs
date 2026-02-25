@@ -1,4 +1,5 @@
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using SwaggerSloop;
 
@@ -374,6 +375,29 @@ app.MapPost("/api/files/upload-avatar", async (IFormFile avatar, int userId) =>
 .WithName("UploadAvatar")
 .WithSummary("上传用户头像")
 .WithDescription("上传用户头像图片，支持 JPEG、PNG、GIF、WebP 格式")
+.WithTags("文件上传")
+.DisableAntiforgery();
+
+app.MapPost("/api/files/batch-upload", async ([FromForm] string teamPostId, IFormFile file) =>
+{
+    if (file == null || file.Length == 0)
+    {
+        return Results.BadRequest(new ApiResponse<object>(false, "请选择要上传的文件", null));
+    }
+
+    var result = new
+    {
+        TeamPostId = teamPostId,
+        FileName = file.FileName,
+        FileSize = file.Length,
+        ContentType = file.ContentType
+    };
+
+    return Results.Ok(new ApiResponse<object>(true, "批量上传成功", result));
+})
+.WithName("BatchUpload")
+.WithOpenApi(operation => new(operation) { Summary = "批量文件上传 (FromForm + IFormFile)" })
+.WithDescription("测试 [FromForm] string + IFormFile 组合参数场景")
 .WithTags("文件上传")
 .DisableAntiforgery();
 

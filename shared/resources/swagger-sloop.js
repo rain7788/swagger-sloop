@@ -1300,7 +1300,7 @@
         // Check for multipart/form-data (file upload)
         const multipartContent = content['multipart/form-data'];
         if (multipartContent) {
-            const schema = resolveRef(multipartContent.schema || {});
+            const schema = mergeAllOf(resolveRef(multipartContent.schema || {}));
             const fields = resolveFormFields(schema);
             return {
                 contentType: 'multipart/form-data',
@@ -1314,7 +1314,7 @@
         // Check for application/x-www-form-urlencoded
         const formContent = content['application/x-www-form-urlencoded'];
         if (formContent) {
-            const schema = resolveRef(formContent.schema || {});
+            const schema = mergeAllOf(resolveRef(formContent.schema || {}));
             const fields = resolveFormFields(schema);
             return {
                 contentType: 'application/x-www-form-urlencoded',
@@ -1328,7 +1328,7 @@
         // Prefer JSON
         const jsonContent = content['application/json'];
         if (jsonContent) {
-            const schema = resolveRef(jsonContent.schema || {});
+            const schema = mergeAllOf(resolveRef(jsonContent.schema || {}));
             return {
                 contentType: 'application/json',
                 required: body.required || false,
@@ -1354,11 +1354,15 @@
     // Resolve form fields from schema for multipart/form-data or x-www-form-urlencoded
     function resolveFormFields(schema) {
         const fields = [];
-        if (!schema || !schema.properties) return fields;
+        if (!schema) return fields;
 
-        const required = schema.required || [];
+        // Merge allOf/oneOf/anyOf before extracting properties
+        const merged = mergeAllOf(schema);
+        if (!merged || !merged.properties) return fields;
 
-        Object.entries(schema.properties).forEach(([name, prop]) => {
+        const required = merged.required || [];
+
+        Object.entries(merged.properties).forEach(([name, prop]) => {
             const resolvedProp = resolveRef(prop);
             const isFile = resolvedProp.type === 'string' && (resolvedProp.format === 'binary' || resolvedProp.format === 'base64');
 
@@ -1420,7 +1424,10 @@
             targetSchema = resolveRef(schema.items);
         }
 
-        if (!targetSchema.properties) return '';
+        // Merge allOf/oneOf/anyOf before rendering
+        targetSchema = mergeAllOf(targetSchema);
+
+        if (!targetSchema || !targetSchema.properties) return '';
 
         const required = targetSchema.required || [];
         let html = '';
@@ -1485,6 +1492,40 @@
         return result;
     }
 
+    // Merge allOf/oneOf/anyOf schemas into a single flat schema
+    function mergeAllOf(schema) {
+        if (!schema) return schema;
+        const resolved = resolveRef(schema);
+        if (!resolved) return resolved;
+
+        // Handle allOf: merge all sub-schemas
+        if (resolved.allOf && Array.isArray(resolved.allOf)) {
+            const merged = { type: 'object', properties: {}, required: [] };
+            for (const sub of resolved.allOf) {
+                const resolvedSub = mergeAllOf(resolveRef(sub));
+                if (resolvedSub.properties) {
+                    Object.assign(merged.properties, resolvedSub.properties);
+                }
+                if (resolvedSub.required && Array.isArray(resolvedSub.required)) {
+                    merged.required.push(...resolvedSub.required);
+                }
+            }
+            // Preserve other top-level properties from original schema
+            const { allOf, ...rest } = resolved;
+            return { ...rest, ...merged };
+        }
+
+        // Handle oneOf/anyOf: use first sub-schema as representative
+        if (resolved.oneOf && Array.isArray(resolved.oneOf) && resolved.oneOf.length > 0) {
+            return mergeAllOf(resolveRef(resolved.oneOf[0]));
+        }
+        if (resolved.anyOf && Array.isArray(resolved.anyOf) && resolved.anyOf.length > 0) {
+            return mergeAllOf(resolveRef(resolved.anyOf[0]));
+        }
+
+        return resolved;
+    }
+
     function generateExample(schema) {
         if (!schema) return '';
 
@@ -1494,9 +1535,12 @@
                 : JSON.stringify(schema.example, null, 2);
         }
 
-        if (schema.type === 'object' && schema.properties) {
+        // Merge allOf/oneOf/anyOf before generating example
+        const merged = mergeAllOf(schema);
+
+        if (merged && merged.type === 'object' && merged.properties) {
             const example = {};
-            Object.entries(schema.properties).forEach(([key, prop]) => {
+            Object.entries(merged.properties).forEach(([key, prop]) => {
                 const resolved = resolveRef(prop);
                 example[key] = getDefaultValue(resolved);
             });

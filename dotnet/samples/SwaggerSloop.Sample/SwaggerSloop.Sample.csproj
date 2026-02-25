@@ -12,4 +12,8 @@
     <ProjectReference Include="..\..\src\SwaggerSloop\SwaggerSloop.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.*" />
+  </ItemGroup>
+
 </Project>

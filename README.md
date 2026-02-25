@@ -31,6 +31,10 @@
 
 ---
 
+### 🎮 Demo / 演示
+
+Visit the live demo: [https://api.aftbay.com/swagger](https://api.aftbay.com/swagger)
+
 ## 📸 Screenshots / 截图
 
 <p align="center">
